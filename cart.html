@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+<link rel="stylesheet" href="./style/cart.css"
+
+  <body>
+        <div id="navbar">
+          <h2>Indian Dishes</h2>
+          <div id="cartCount"></div>
+          <a href="./cart.html">Cart</a>
+        </div>
+    <div id="fix">
+    <div id="cart">
+      <!--Show dishes added to cart here-->
+      <!-- add an remove button to each dish so that you can remove that dish from cart, give it HTML id as 'remove' -->
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+      </table>
+    </div>
+    <h2 id="total">
+      <!--Show cart total ONLY here-->
+    </h2>
+
+
+    </div>
+
+  </body>
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log(cart);
+    if(!cart)
+    {
+      cart= [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      display(cart)
+    }else{
+      display(cart);
+    }
+
+  
+
+ 
+      function display(cart){
+          let tbody = document.getElementById("tbody");
+          tbody.innerHTML= "";
+          console.log(cart)
+          let table = document.getElementById("table")
+          let container = document.getElementById("cart")
+          cart.forEach(function (element, index) {
+          let tr = document.createElement("tr");
+          let td1 = document.createElement("td");
+          let image = document.createElement("img");
+          image.src = element.strMealThumb;
+          td1.append(image);
+          let td2 = document.createElement("td")
+          td2.textContent = element.strMeal;
+          let td3 = document.createElement("td")
+          td3.textContent = element.price;
+          let btn = document.createElement("button");
+          btn.textContent = "Delete";
+          btn.onclick = function (event) {
+            delete_item(index)
+          }
+          tr.append(td1, td2, td3, btn)
+          tbody.append(tr)
+          let total = cart.reduce(function (accumulator, current) {
+             return accumulator + current.price
+          }, 0)
+          let final_total = document.getElementById("total")
+          final_total.textContent = "Total Price :-" + total
+
+        }) 
+      }
+     
+     function delete_item(index) {
+         let cart = JSON.parse(localStorage.getItem("cart"))
+        cart.splice(index,1)
+        localStorage.setItem("cart",JSON.stringify(cart));
+        
+        display(cart)
+
+     }
+
+ 
+  </script>
+ 
+  
+
+</html>

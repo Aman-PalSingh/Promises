@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="./style/index.css"
+  </head>
+
+  <body>
+    <div id="navbar">
+     <h2>Indian Dishes</h2>
+     <div id="cartCount"></div>
+     <a href="./cart.html">Cart</a>
+    </div>
+
+    <div id="menu">
+
+      <!--Show indian dishes here in grid format-->
+      <!-- add an add to cart button to each dish, give it HTML id as 'addtocart' -->
+
+    </div>
+  </body>
+<script>
+  var url = "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian"
+  var cart = localStorage.getItem("cart");
+  if(!cart) {
+    cart = [];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    cartCount(cart)
+  }else{
+    cart = JSON.parse(cart)
+    cartCount(cart)
+  }
+  async function getProduct()
+  {
+    try{
+      let products = await fetchProduct(url)
+      makeProduct(products)  
+    }
+    catch(e){
+      console.log("e", e)
+    }
+  }
+  getProduct();
+  function fetchProduct(url){
+    return fetch(url)
+    .then(function(response){
+      return response.json()
+    })
+    .then(function(response)
+    { return response}
+    )
+    .catch(function(e){return e})
+  }
+function makeProduct(products)
+{ console.log(products)
+  let container = document.getElementById("menu")
+  container.innerHTML ="";
+  products.meals.forEach(function(product){
+    var div = document.createElement("div");
+    var image = document.createElement("img")
+    image.src = product.strMealThumb;
+    var name = document.createElement("h3")
+    name.textContent = product.strMeal;
+    var price = document.createElement("p")
+    var x = Math.round(Math.random() * 400)
+    price.textContent = "Price :- $ " + x ;
+    let addTocartButton = document.createElement("button");
+    addTocartButton.textContent = "Add To Cart"
+    addTocartButton.onclick = function(event) {
+      addToCart(product,x)
+    }
+    div.append(image,name,price,addTocartButton)
+    container.append(div)
+  })
+}
+function cartCount(cart)
+{
+  let cartCount = document.getElementById("cartCount")
+  cartCount.textContent = "No. Of Items :- " + cart.length;
+}
+function addToCart(product,price) {
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  product.price = price
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart))
+  cartCount(cart);
+}
+</script>
+</html>

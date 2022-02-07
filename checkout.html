@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="./style/checkout.css">
+  </head>
+
+  <body>
+    <div id="order-form">
+      <!--Add your form html element here-->
+      <!--In form, give #name,#number and #address as HTML id's to relevant input elements -->
+            <form id="myForm">
+              <div style="display: block;">
+              <span>Name :-</span> <input id="name" type="text" placeholder="Enter Name" />
+              </div>
+              <div style="display: block;">
+              <span>Mobile No. :-</span><input id="number" type="number" placeholder="Enter Mobile No." />
+              </div>
+              <div style="display: block;">
+              <span>Adddress :-</span><textarea name="" id="address" cols="30" rows="10" placeholder="Enter Address"></textarea>
+              </div>
+              <div style="display: block;">        
+              </div>
+             <div>
+              <input type="submit" value="Confirm" />
+             </div>
+
+            </form>
+        
+      </div>
+
+
+  </body>
+
+</html>
+<script>
+  let form = document.getElementById("myForm")
+  form.addEventListener("submit",addFunc)
+  function addFunc(event)
+  { event.preventDefault();
+    let name = document.getElementById("name").value
+    let mobile_no = document.getElementById("number").value
+    let address  = document.getElementById("address").value
+  //console.log(name,mobile_no,address)
+  if(name && address && mobile_no)
+  { setTimeout(function(){
+    alert("Order Submission Successful")
+    window.location.href = "thanks.html"
+  },3000)
+    
+  }
+  }
+</script>
