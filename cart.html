@@ -84,9 +84,14 @@
           }, 0)
           let final_total = document.getElementById("total")
           final_total.textContent = "Total Price :-" + total
-
+          cartCount(cart)
         }) 
       }
+
+      function cartCount(cart) {
+          let cartCount = document.getElementById("cartCount")
+          cartCount.textContent = "No. Of Items :- " + cart.length;
+        }
      
      function delete_item(index) {
          let cart = JSON.parse(localStorage.getItem("cart"))
